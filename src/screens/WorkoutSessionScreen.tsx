@@ -28,7 +28,7 @@ export default function WorkoutSessionScreen({ workoutId, userId, onClose }: Pro
   const [isFinished, setIsFinished] = useState(false);
   const [saving, setSaving] = useState(false);
   
-  const timerRef = useRef<NodeJS.Timeout | null>(null);
+  const timerRef = useRef<ReturnType<typeof setInterval> | null>(null);
 
   useEffect(() => {
     const initialLogs: ExerciseLog[] = [];

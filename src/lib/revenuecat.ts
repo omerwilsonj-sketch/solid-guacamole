@@ -173,6 +173,8 @@ export async function restorePurchases(): Promise<CustomerInfo | null> {
 export function addCustomerInfoListener(
   callback: (customerInfo: CustomerInfo) => void
 ): () => void {
-  const listener = Purchases.addCustomerInfoUpdateListener(callback);
-  return listener;
+  Purchases.addCustomerInfoUpdateListener(callback);
+  return () => {
+    Purchases.removeCustomerInfoUpdateListener(callback);
+  };
 }

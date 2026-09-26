@@ -33,7 +33,7 @@ export default function ExerciseLibraryScreen() {
         <Text style={styles.exerciseName}>{item.name}</Text>
         <Text style={styles.exerciseCategory}>{item.category} • {item.tier}</Text>
       </View>
-      <Text style={styles.chevron}>></Text>
+      <Text style={styles.chevron}>{'>'}</Text>
     </TouchableOpacity>
   );
 

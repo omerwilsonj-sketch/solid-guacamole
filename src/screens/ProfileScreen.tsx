@@ -28,7 +28,6 @@ interface OfferingPackage {
 
 interface Offering {
   identifier: string;
-  description: string;
   availablePackages: OfferingPackage[];
 }
 

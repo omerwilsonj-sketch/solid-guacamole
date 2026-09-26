@@ -17,11 +17,19 @@ export interface Exercise {
   notes?: string;
 }
 
+export interface ExerciseRef {
+  id: string;
+  name: string;
+  targetSets?: number;
+  targetReps?: number;
+  videoUrl?: string;
+}
+
 export interface WorkBlock {
   title: string;
   duration: number; // in minutes
   format: string;
-  exercises: Exercise[];
+  exercises: ExerciseRef[];
 }
 
 export interface WorkoutSession {

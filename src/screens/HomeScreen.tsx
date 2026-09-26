@@ -72,7 +72,7 @@ export default function HomeScreen({
 
   const isTabLocked = (tab: Tab) => {
     if (tab === 'workouts' || tab === 'profile') return false;
-    if (tier === 'go' || tier === 'go') return true;
+    if (tier === 'go') return true;
     return false; // Core, VIP, and Elite get everything else
   };
 
