@@ -6,10 +6,15 @@
     "orientation": "portrait",
     "icon": "./assets/branding/logo.png",
     "userInterfaceStyle": "dark",
+    "scheme": "echelonform",
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "bundleIdentifier": "com.echelonform.app",
+      "buildNumber": "1"
     },
     "android": {
+      "package": "com.echelonform.app",
+      "versionCode": 1,
       "adaptiveIcon": {
         "backgroundColor": "#050505",
         "foregroundImage": "./assets/android-icon-foreground.png",
