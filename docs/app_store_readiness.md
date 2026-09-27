@@ -12,6 +12,24 @@ The Echelon Form mobile app (React Native + Expo SDK 56, TypeScript strict) is *
 
 ---
 
+## 1a. Compliance item C5 — Wearable / health-data integration: NOT LIVE (ground truth)
+
+**Question:** Is Apple Health / Oura / Whoop integration actually live and working in the app today?
+
+**Answer: NO.** There is no wearable or health-data integration in the app — not implemented, not scaffolded, not functional. **Marketing must NOT claim device sync or wearable-driven "recovery-aware coaching" based on device data.**
+
+Evidence from the codebase (`solid-guacamole` @ `main`):
+- **No health SDK in dependencies** — `package.json` lists only: supabase-js, react-native-purchases, async-storage, expo-secure-store, expo-status-bar, react, react-native, expo, url-polyfill. No `expo-health`, no `react-native-health`, no Oura SDK, no Whoop SDK.
+- **Zero references in source** — `grep -riE "healthkit|applehealth|oura|whoop|expo-health|react-native-health|hkhealthstore|hrv|sleep|readiness" src/` returns nothing. (The only `oura`-looking hit in `package-lock.json` is a base64 integrity hash substring, not code.)
+- **No HealthKit permission strings in app.json** — plugins are only `expo-secure-store` and `react-native-purchases`. If HealthKit were live, `NSHealthShareUsageDescription`/`NSHealthUpdateUsageDescription` and the HealthKit entitlement would be required; they are absent.
+- **No recovery/readiness data source** — the app collects workout logs and nutrition logs only. There is no manual readiness/sleep/HRV input either, so even "recovery-aware" wording cannot be grounded in any data the app currently has.
+
+What the app DOES do today: 30-min efficiency-first workout tracking (set/rep/kg logging), 52-exercise library, MSJ macro nutrition logging, coaching chat (Supabase Realtime), RevenueCat subscription gating, Retell AI concierge.
+
+**Recommendation for marketing:** keep the softened wording that does not reference device data. Restore device-sync claims only after the Phase-3 wearable API integration is actually built and tested.
+
+---
+
 ## 2. What Works (verified in audit)
 
 | Area | Status |
@@ -25,6 +43,7 @@ The Echelon Form mobile app (React Native + Expo SDK 56, TypeScript strict) is *
 | Profile & paywall | ✅ `ProfileScreen.tsx` — current tier, restore purchases, RevenueCat offering-driven upgrades |
 | RevenueCat billing | ✅ Wired (Go £14.99 / Core £49 / VIP £249 / Elite £999). SDK uses `EXPO_PUBLIC_REVENUECAT_API_KEY` |
 | Retell AI concierge | ✅ Client lib + Supabase edge functions (retell-concierge, retell-webhook) |
+| Apple Health / Oura / Whoop | ❌ **NOT implemented** — no health SDK, no HealthKit entitlements, no device data (see §1a, C5) |
 | Branding | ✅ No "VantageFit" references anywhere; dark luxury theme, Echelon Form assets |
 | App icons/splash | ✅ 1024×1024 icon, 1024 splash, Android adaptive icons (512 foreground/background/monochrome) |
 | Repository hygiene | ✅ `.env` NOT tracked; no secrets committed; `.gitignore` covers env + native folders |
@@ -69,7 +88,7 @@ The Echelon Form mobile app (React Native + Expo SDK 56, TypeScript strict) is *
 | Store listing copy (title/subtitle/description/keywords) | ❌ Not created — suggest drafting from the landing page + business plan (see §5) |
 | **Content rating questionnaire** | ❌ Not created — App Store content description + Google Play IARC questionnaire. App is fitness-only, no objectionable content. |
 | **In-app purchase products in App Store Connect / Play Console** | ❌ Must mirror RevenueCat products: `echelon_go_monthly`, `echelon_core_monthly`, `echelon_vip_monthly`, `echelon_elite_monthly` (entitlements: go/core/vip/elite) |
-| **iOS HealthKit / watchOS entitlements** | ⏸ Not needed for v1 — integration with Apple Health is a planned Phase-3 feature, not yet in code |
+| **iOS HealthKit / watchOS entitlements** | ⏸ Not needed for v1 — integration with Apple Health is a planned Phase-3 feature, not yet in code (see §1a, C5) |
 
 ### C. Declared permissions
 
